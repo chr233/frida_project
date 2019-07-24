@@ -4,7 +4,7 @@ from typing import BinaryIO
 
 
 js_file_name = 'Hook.js'
-process_name = 'com.xxx.xxx'
+process_name = 'com.max.xiaoheihe'
 
 
 # 自定义回调函数
