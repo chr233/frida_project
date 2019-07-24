@@ -1,38 +1,32 @@
-import frida, sys
+import sys
+import frida
+from typing import BinaryIO
 
+
+js_file_name = 'Hook.js'
+process_name = 'com.xxx.xxx'
+
+
+# 自定义回调函数
 def on_message(message, data):
     if message['type'] == 'send':
         print("[*] {0}".format(message['payload']))
     else:
         print(message)
 
-jscode = """
-Java.perform(function () {
-    // Function to hook is defined here
-    var MainActivity = Java.use('com.example.seccon2015.rock_paper_scissors.MainActivity');
 
-    // Whenever button is clicked
-    MainActivity.onClick.implementation = function (v) {
-        // Show a message to know that the function got called
-        send('onClick');
+def get_js_code():
+    js_file = open(js_file_name)  # type: BinaryIO
+    return js_file.read()
 
-        // Call the original onClick handler
-        this.onClick(v);
 
-        // Set our values after running the original onClick handler
-        this.m.value = 0;
-        this.n.value = 1;
-        this.cnt.value = 999;
-
-        // Log to the console that it's done, and we should have the flag!
-        console.log('Done:' + JSON.stringify(this.cnt));
-    };
-});
-"""
-
-process = frida.get_usb_device().attach('com.max.xiaoheihe')
-script = process.create_script(jscode)
-script.on('message', on_message)
-print('[*] Running CTF')
-script.load()
-sys.stdin.read()
+if __name__ == '__main__':
+    # 附加到进程并得到进程对象
+    process = frida.get_usb_device().attach(process_name)
+    # 指定JavaScript脚本
+    script = process.create_script(get_js_code())
+    # 加载JavaScript脚本
+    script.on('message', on_message)
+    script.load()
+    # 读取返回输入
+    sys.stdin.read()
