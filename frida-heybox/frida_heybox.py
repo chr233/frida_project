@@ -9,11 +9,8 @@ process_name = 'com.max.xiaoheihe'
 
 # 自定义回调函数
 def on_message(message, data):
-    if message['type'] == 'send':
-        print("[*] {0}".format(message['payload']))
-    else:
         print(message)
-
+        print(data)
 
 def get_js_code():
     js_file = open(js_file_name)  # type: BinaryIO
@@ -21,8 +18,9 @@ def get_js_code():
 
 
 if __name__ == '__main__':
+    rdev=frida.get_remote_device()
     # 附加到进程并得到进程对象
-    process = frida.get_usb_device().attach(process_name)
+    process = rdev.attach(process_name)
     # 指定JavaScript脚本
     script = process.create_script(get_js_code())
     # 加载JavaScript脚本

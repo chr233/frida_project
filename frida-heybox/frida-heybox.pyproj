@@ -11,6 +11,8 @@
     <OutputPath>.</OutputPath>
     <Name>frida-heybox</Name>
     <RootNamespace>frida-heybox</RootNamespace>
+    <InterpreterId>
+    </InterpreterId>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
