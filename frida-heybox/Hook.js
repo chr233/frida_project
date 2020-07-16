@@ -2,24 +2,25 @@
  * @Author       : Chr_
  * @Date         : 2020-02-16 18:42:39
  * @LastEditors  : Chr_
- * @LastEditTime : 2020-07-16 22:40:20
+ * @LastEditTime : 2020-07-16 23:45:59
  * @Description  : 
  */
 console.log("脚本载入成功");
 
 Java.perform(function() {
-    // var nativePointer = Module.findExportByName("libnative-lib.so", "encode");
-    // console.log("native: " + nativePointer);
-    // Interceptor.attach(nativePointer, {
-    //     onEnter: function(args) {
-    //         console.log("encode", args[0], ",", args[1], ",", args[2], ",", args[3], ",", args[4]);
-    //     },
-    //     onLeave: function(retval) {
-    //         console.log(retval);
-    //     }
-    // });
+    var nativePointer = Module.findExportByName("libnative-lib.so", "encode");
+    console.log("native: " + nativePointer);
+    Interceptor.attach(nativePointer, {
+        onEnter: function(args) {
+            console.log("encode", args[0], ",", args[1], ",", args[2], ",", args[3], ",", args[4]);
+        },
+        onLeave: function(retval) {
+            console.log(retval);
+        }
+    });
 
-
+    var currentApplication = Java.use("android.app.ActivityThread").currentApplication();
+    var context = currentApplication.getApplicationContext();
 
     var cls = Java.use('com.max.xiaoheihe.utils.W');
     cls.b.overload("java.lang.String").implementation = function(p1) {
