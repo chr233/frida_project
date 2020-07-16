@@ -1,24 +1,33 @@
+'''
+# @Author       : Chr_
+# @Date         : 2020-02-16 18:42:42
+# @LastEditors  : Chr_
+# @LastEditTime : 2020-07-15 22:09:24
+# @Description  : 
+'''
+
 import sys
 import frida
 from typing import BinaryIO
 
 
-js_file_name = 'Hook.js'
+js_file_name = 'frida-heybox/Hook.js'
 process_name = 'com.max.xiaoheihe'
 
 
 # 自定义回调函数
 def on_message(message, data):
-        print(message)
-        print(data)
+    print(message)
+    print(data)
+
 
 def get_js_code():
-    js_file = open(js_file_name)  # type: BinaryIO
+    js_file = open(js_file_name,encoding='utf-8')  # type: BinaryIO
     return js_file.read()
 
 
 if __name__ == '__main__':
-    rdev=frida.get_remote_device()
+    rdev = frida.get_usb_device()
     # 附加到进程并得到进程对象
     process = rdev.attach(process_name)
     # 指定JavaScript脚本
