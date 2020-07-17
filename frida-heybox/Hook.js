@@ -2,17 +2,41 @@
  * @Author       : Chr_
  * @Date         : 2020-02-16 18:42:39
  * @LastEditors  : Chr_
- * @LastEditTime : 2020-07-16 23:45:59
+ * @LastEditTime : 2020-07-17 10:20:23
  * @Description  : 
  */
 console.log("脚本载入成功");
 
 Java.perform(function() {
+    function print_dump(addr, size) {
+        var buf = Memory.readByteArray(addr, size)
+        console.log("[function] send[*] " + addr.toString() + "  " + "length: " + size.toString() + "\n[data]")
+        console.log(hexdump(buf, {
+            offset: 0,
+            length: size,
+            header: false,
+            ansi: false
+        }));
+        console.log("")
+    }
+
+
+
     var nativePointer = Module.findExportByName("libnative-lib.so", "encode");
     console.log("native: " + nativePointer);
     Interceptor.attach(nativePointer, {
         onEnter: function(args) {
-            console.log("encode", args[0], ",", args[1], ",", args[2], ",", args[3], ",", args[4]);
+            console.log("encode")
+            print_dump(args[1], 255)
+            const ptr1 = new NativePointer(args[1]);
+            console.log(Memory.readCString(Memory.readPointer(ptr1)));
+            console.log(Memory.readUtf8String(Memory.readPointer(ptr1)));
+            console.log(Memory.readUtf16String(Memory.readPointer(ptr1)));
+
+            // console.log(Memory.readByteArray(args[4], 255))
+            // console.log(args[4].toInt32())
+            // console.log(ptr1)
+            // , ",", args[1], ",", args[2], ",", args[3], ",", args[4]);
         },
         onLeave: function(retval) {
             console.log(retval);

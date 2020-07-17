@@ -2,7 +2,7 @@
 # @Author       : Chr_
 # @Date         : 2020-02-16 18:42:42
 # @LastEditors  : Chr_
-# @LastEditTime : 2020-07-15 22:09:24
+# @LastEditTime : 2020-07-17 10:16:06
 # @Description  : 
 '''
 
@@ -17,8 +17,7 @@ process_name = 'com.max.xiaoheihe'
 
 # 自定义回调函数
 def on_message(message, data):
-    print(message)
-    print(data)
+    print(message,data)
 
 
 def get_js_code():
