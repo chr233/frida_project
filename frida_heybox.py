@@ -2,7 +2,7 @@
 # @Author       : Chr_
 # @Date         : 2020-02-16 18:42:42
 # @LastEditors  : Chr_
-# @LastEditTime : 2020-07-17 10:16:06
+# @LastEditTime : 2020-07-21 21:07:42
 # @Description  : 
 '''
 
@@ -11,7 +11,7 @@ import frida
 from typing import BinaryIO
 
 
-js_file_name = 'frida-heybox/Hook.js'
+js_file_name = 'hook.js'
 process_name = 'com.max.xiaoheihe'
 
 
