@@ -9,7 +9,7 @@
             "name": "调试",
             "type": "python",
             "request": "launch",
-            "program": "${workspaceFolder}/frida_heybox.py",
+            "program": "${workspaceFolder}/run.py",
             "console": "integratedTerminal"
         }
     ]
