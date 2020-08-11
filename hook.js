@@ -2,7 +2,7 @@
  * @Author       : Chr_
  * @Date         : 2020-02-16 18:42:39
  * @LastEditors  : Chr_
- * @LastEditTime : 2020-08-08 12:34:33
+ * @LastEditTime : 2020-08-10 23:38:21
  * @Description  : com.max.xiaoheihe
  */
 
@@ -45,17 +45,14 @@ Java.perform(function () {
         console.log('genkey-out:', ps);
         return (ps);
     }
-    // var uw = Java.use('com.max.xiaoheihe.utils.W');
-    // uw.d.overload("int").implementation = function (p1) {
-    //     console.log('genkey-in:', p1);
-    //     if (p1 == 8) {
-    //         var ps = "aaaaaaaa";
-    //     } else {
-    //         var ps = this.d(p1);
-    //     }
-    //     console.log('genkey-out:', ps);
-    //     return (ps);
-    // }
+
+    var ru = Java.use('com.max.xiaoheihe.utils.ta');
+    ru.a.overload("java.lang.String").implementation = function (p1) {
+        console.log('rsa-in:', p1);
+        var ps = this.a(p1);
+        // console.log('rsa-out:', base64.encodeToString(ps,0));
+        return (ps);
+    }
     // var MDStringAddr = Module.findExportByName("libnative-lib.so", "MDString");
     // console.log(MDStringAddr);
     // if (MDStringAddr != null) {
