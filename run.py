@@ -2,14 +2,15 @@
 # @Author       : Chr_
 # @Date         : 2020-02-16 18:42:42
 # @LastEditors  : Chr_
-# @LastEditTime : 2020-08-14 00:06:10
+# @LastEditTime : 2020-08-25 18:19:17
 # @Description  : 加载器
 '''
 
 import sys
-import frida
+from frida import get_remote_device, get_usb_device
+from os import path
 
-process_name = 'com.max.xiaoheihe'
+target = 'sctf.demo.myapplication'
 
 
 # 发送信息回调函数
@@ -19,18 +20,18 @@ def on_message(message, data):
     else:
         print(message)
 
-
 if __name__ == '__main__':
     try:
-        device = frida.get_usb_device()
+        device = get_usb_device()
     except:
-        device = frida.get_remote_device()
+        device = get_remote_device()
     if not device:
         print("* 连接到Frida Server失败")
     else:
-        process = device.attach(process_name)
+        process = device.attach(target)
         # 加载JS脚本
-        js = open('hook.js', encoding='utf-8').read()
+        jspath = path.join('scripts', f'{target}js')
+        js = open(jspath, encoding='utf-8').read()
         script = process.create_script(js)
         script.on('message', on_message)
         script.load()
