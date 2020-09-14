@@ -2,7 +2,7 @@
 # @Author       : Chr_
 # @Date         : 2020-02-16 18:42:42
 # @LastEditors  : Chr_
-# @LastEditTime : 2020-09-03 22:36:32
+# @LastEditTime : 2020-09-14 19:35:16
 # @Description  : 加载器
 '''
 
@@ -10,7 +10,9 @@ import sys
 from frida import get_remote_device, get_usb_device
 from os import path
 
-target = 'com.klcxkj.zqxy'
+# Hook目标，会自动加载对应脚本
+# target = 'com.max.xiaoheihe'
+target = 'com.example.ndktest2'
 
 
 # 发送信息回调函数
@@ -19,6 +21,7 @@ def on_message(message, data):
         print(f"[*] {message['payload']}")
     else:
         print(message)
+
 
 if __name__ == '__main__':
     try:
@@ -31,7 +34,7 @@ if __name__ == '__main__':
         process = device.attach(target)
         # 加载JS脚本
         jspath = path.join('scripts', f'{target}.js')
-        js = open(jspath, encoding='utf-8').read()
+        js = open(jspath,'r', encoding='utf-8').read()
         script = process.create_script(js)
         script.on('message', on_message)
         script.load()
