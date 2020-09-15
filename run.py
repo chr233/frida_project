@@ -2,7 +2,7 @@
 # @Author       : Chr_
 # @Date         : 2020-02-16 18:42:42
 # @LastEditors  : Chr_
-# @LastEditTime : 2020-09-14 19:35:16
+# @LastEditTime : 2020-09-15 13:19:33
 # @Description  : 加载器
 '''
 
@@ -12,7 +12,8 @@ from os import path
 
 # Hook目标，会自动加载对应脚本
 # target = 'com.max.xiaoheihe'
-target = 'com.example.ndktest2'
+# target = 'com.example.ndktest2'
+target = 'com.example.kn4ve.jnitestdemo'
 
 
 # 发送信息回调函数
@@ -34,7 +35,7 @@ if __name__ == '__main__':
         process = device.attach(target)
         # 加载JS脚本
         jspath = path.join('scripts', f'{target}.js')
-        js = open(jspath,'r', encoding='utf-8').read()
+        js = open(jspath, 'r', encoding='utf-8').read()
         script = process.create_script(js)
         script.on('message', on_message)
         script.load()
