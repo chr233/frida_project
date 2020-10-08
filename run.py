@@ -2,7 +2,7 @@
 # @Author       : Chr_
 # @Date         : 2020-02-16 18:42:42
 # @LastEditors  : Chr_
-# @LastEditTime : 2020-09-15 13:19:33
+# @LastEditTime : 2020-10-09 07:40:26
 # @Description  : 加载器
 '''
 
@@ -11,10 +11,7 @@ from frida import get_remote_device, get_usb_device
 from os import path
 
 # Hook目标，会自动加载对应脚本
-# target = 'com.max.xiaoheihe'
-# target = 'com.example.ndktest2'
-target = 'com.example.kn4ve.jnitestdemo'
-
+target = 'com.max.xiaoheihe'
 
 # 发送信息回调函数
 def on_message(message, data):
