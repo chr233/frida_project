@@ -2,10 +2,9 @@
 # @Author       : Chr_
 # @Date         : 2020-02-16 18:42:42
 # @LastEditors  : Chr_
-# @LastEditTime : 2020-10-09 07:40:26
+# @LastEditTime : 2020-11-21 19:21:10
 # @Description  : 加载器
 '''
-
 import sys
 from frida import get_remote_device, get_usb_device
 from os import path
