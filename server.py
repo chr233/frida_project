@@ -2,7 +2,7 @@
 # @Author       : Chr_
 # @Date         : 2021-11-18 19:26:42
 # @LastEditors  : Chr_
-# @LastEditTime : 2021-11-18 20:03:31
+# @LastEditTime : 2021-11-18 20:53:29
 # @Description  : 
 '''
 from os import path
@@ -35,7 +35,7 @@ if __name__ == '__main__':
         nonce = request.values.get('nonce')
 
         result = script.exports.encode(urlpath, timestamp, nonce)
-
+        print(result)
         return result
 
     app.run('127.0.0.1', 9000)

@@ -2,7 +2,7 @@
  * @Author       : Chr_
  * @Date         : 2020-09-12 19:35:23
  * @LastEditors  : Chr_
- * @LastEditTime : 2021-11-18 20:03:21
+ * @LastEditTime : 2021-11-18 20:57:06
  * @Description  : 
  */
 
@@ -51,12 +51,11 @@ Java.perform(function () {
         let flag = false;
         Java.choose("com.max.xiaoheihe.utils.o1", {
             onMatch: function (instance) {
-                console.log('find it');
+                // console.log('find it');
                 instance.y();
                 flag = true;
             }, onComplete: function () {
-                console.log('complete');
-
+                // console.log('complete');
                 if (!flag) {
                     Gresult = undefined;
                 }
