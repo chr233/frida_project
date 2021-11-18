@@ -2,7 +2,7 @@
 # @Author       : Chr_
 # @Date         : 2021-11-18 19:26:42
 # @LastEditors  : Chr_
-# @LastEditTime : 2021-11-18 20:53:29
+# @LastEditTime : 2021-11-18 23:51:21
 # @Description  : 
 '''
 from os import path
@@ -10,6 +10,7 @@ import sys
 from frida import get_remote_device, get_usb_device
 
 from flask import Flask, request
+import frida
 
 app = Flask(__name__)
 
@@ -34,8 +35,14 @@ if __name__ == '__main__':
         timestamp = request.values.get('timestamp')
         nonce = request.values.get('nonce')
 
-        result = script.exports.encode(urlpath, timestamp, nonce)
-        print(result)
+        if not urlpath or not timestamp or not nonce:
+            return 'Params Error urlpath timestamp nonce'
+        try:
+            result = script.exports.encode(urlpath, timestamp, nonce)
+            print(result)
+        except (frida.InvalidOperationError, TypeError) as e:
+            result = f'Frida Server Error {e}'
+
         return result
 
     app.run('127.0.0.1', 9000)
