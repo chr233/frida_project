@@ -2,9 +2,10 @@
 # @Author       : Chr_
 # @Date         : 2021-11-18 19:26:42
 # @LastEditors  : Chr_
-# @LastEditTime : 2021-11-18 23:51:21
-# @Description  : 
+# @LastEditTime : 2021-11-19 00:03:07
+# @Description  : Python版rpc服务端
 '''
+
 from os import path
 import sys
 from frida import get_remote_device, get_usb_device
