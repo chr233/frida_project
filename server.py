@@ -2,18 +2,34 @@
 # @Author       : Chr_
 # @Date         : 2021-11-18 19:26:42
 # @LastEditors  : Chr_
-# @LastEditTime : 2021-11-19 00:03:07
+# @LastEditTime : 2022-02-22 18:12:23
 # @Description  : Python版rpc服务端
 '''
 
-from os import path
 import sys
-from frida import get_remote_device, get_usb_device
 
+from frida import get_remote_device, get_usb_device, InvalidOperationError
 from flask import Flask, request
-import frida
 
 app = Flask(__name__)
+
+
+scrips = '''
+Java.perform(function () {
+    rpc.exports = {
+        encode(urlpath, timestamp, nonce) {
+            if (!urlpath.toString().endsWith('/')) {
+                urlpath += '/';
+            }
+            var currentApp = Java.use('android.app.ActivityThread').currentApplication();
+            var context = currentApp.getApplicationContext();
+            var NDKTools = Java.use('com.max.xiaoheihe.utils.NDKTools');
+            var hkey = NDKTools.encode(context, urlpath, timestamp, nonce);
+            return hkey;
+        },
+    };
+});
+'''
 
 if __name__ == '__main__':
     try:
@@ -25,9 +41,7 @@ if __name__ == '__main__':
         sys.exit(1)
 
     process = device.attach('小黑盒')
-    jspath = path.join('scripts', 'xiaoheihe_rpc.js')
-    js = open(jspath, 'r', encoding='utf-8').read()
-    script = process.create_script(js)
+    script = process.create_script(scrips)
     script.load()
 
     @app.route('/encode', methods=['GET', 'POST'])
@@ -41,7 +55,7 @@ if __name__ == '__main__':
         try:
             result = script.exports.encode(urlpath, timestamp, nonce)
             print(result)
-        except (frida.InvalidOperationError, TypeError) as e:
+        except (InvalidOperationError, TypeError) as e:
             result = f'Frida Server Error {e}'
 
         return result
